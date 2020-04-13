@@ -42,6 +42,36 @@ poprawną odpowiedzią jest:
 */
 
 
+fn factorial(n: u8) -> u32 {
+    if n <= 1 {
+        1u32
+    } else if n > 9 {
+        0u32
+    } else {
+        let mut sum: u32 = 1;
+        for i in 1..=n {
+            sum = sum * i as u32;
+        } 
+        sum
+    }
+}
+
 fn main() {
-    println!("Hello, world!");
+    let stdin = std::io::stdin();
+    let mut buffer = String::new();
+    stdin.read_line(&mut buffer).expect("err");
+
+    let t:u16 = buffer.trim().parse().unwrap();
+    for _ in 0..t{
+        buffer.clear();
+        stdin.read_line(&mut buffer).expect("err");
+        let n:u8 = buffer.trim().parse().unwrap();
+        let fact: Vec<_> = factorial(n).to_string().chars().rev().collect();
+        match fact.len() {
+            n if n > 9 => println!("{} {}", 0, 0),
+            n if n == 1 => println!("{} {}", 0, fact[0]),
+            _ => println!("{} {}", fact[1], fact[0]),
+ 
+        }
+    }
 }
